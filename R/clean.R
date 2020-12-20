@@ -1,13 +1,27 @@
 #'
 #' @title Clean each data
 #'
-#' @description Filter and order metabolites across all batches
+#' @description Preprocessing of all the data in teh list. This function
+#' performs filtering, kNN imputation and orders metabolites across all batches.
+#'
+#' kNN imputation is used for missing values, with \code{k} set to 10 with
+#' knnImputation function from DMwR2 package.
+#'
+#' If method \code{intersect} is selected, all metabolites present across all
+#' batches after filtering those with percentage of metabolite quantified in a
+#' batch less than the threshold value. If method \code{union} is selected, all
+#' metabolites measured in all batches are included, those metabolites with
+#' percentage of quantification greater than the threshold will be imputed with
+#' kNN and the remaining metabolites will be imputed with the sample mean.
 #'
 #' @param dat_list A list of SummarizedExperiment data where each object
 #' represents a batch.
 #' @param threshold A threshold value between 0 and 1 of missingness to filter.
 #' @param method A method to select metabolites across al batches.
 #' @param assay An assay name to measure the missingness of the signals.
+#' @param newAssay A name of the new assay for cleaned (preprocessed) data.
+#'
+#' @return A list of SummarizedExperiment data after preprocessing.
 #'
 #' @export clean
 clean = function(dat_list, threshold = 0.5, method = c("intersect", "union"),

@@ -1,6 +1,5 @@
 #' @importFrom SummarizedExperiment SummarizedExperiment assay
 #' @importFrom dplyr select %>% all_of arrange
-#'
 smoothAdj = function(dat, assay, method = c("rlm", "loess"), pCtl = NULL) {
     run_order = seq(ncol(dat))
 
@@ -98,6 +97,37 @@ smoothAdj = function(dat, assay, method = c("rlm", "loess"), pCtl = NULL) {
 }
 
 
+#' @title Intra-batch normalisation
+#'
+#' @description Removes unwanted variation within batch.
+#'
+#' \code{rlm} and \code{loess}
+#'
+#' \code{rlm} or \code{loess} methods fits robust linear model or loess
+#' respectively to samples selected from \code{pCtName}. \code{rlmShort} and
+#' \code{loessShort} both performs robust smoother \code{rlm} and \code{loess}
+#' respectively then performs RUV-III utilising the replicates identified from
+#' \code{intra_rep}. Parameters \code{negCtl} and \code{intra_k} will be used
+#' for RUV-III.
+#'
+#' @param dat_list A list of SummarizedExperiment data where each object
+#' represents a batch.
+#' @param assay An assay name to measure the missingness of the signals.
+#' @param method A method to use for removing signal drift and unwanted
+#' variations. See descriptions for further details.
+#' @param pCtlName A column variable name in colData of each
+#' SummarizedExperiment object which selects samples to be used to fit the
+#' robust smoother.
+#' @param rep A column variable name in colData of each SummarizedExperiment
+#' object which identifies intra-batch (short) sample replicates.
+#' @param k A RUV-III paramater k value
+#' @param negCtl A vector of row IDs for selection of stable matbolites to be
+#' used as negative control in RUV.
+#'
+#'
+#' @return A list of intra-batch normalized SummarizedExperiment data.
+#'
+#'
 #' @export
 intraNorm = function(dat_list, assay,
     method = c("rlm", "loess", "rlmShort", "loessShort"),

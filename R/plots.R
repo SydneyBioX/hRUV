@@ -1,3 +1,18 @@
+#' @title Principal Component Analysis (PCA) plot
+#'
+#' @param dat SummarizedExperiment object data
+#' @param assay An assay to use in a SummarizedExperiment object
+#' @param colour A group vector to colour the points in the PCA plot
+#' @param ... An additional parameter to be used for PCA (\code{prcomp} from
+#' stats package)
+#'
+#'
+#' @return PCA plot
+#'
+#' @importFrom stats prcomp
+#' @importFrom ggplot2 ggplot aes geom_point ggtitle labs
+#' @importFrom SummarizedExperiment assay
+#'
 #' @export
 plotPCA = function(dat, assay, colour, ...) {
     mat = SummarizedExperiment::assay(dat, assay)
@@ -18,6 +33,19 @@ plotPCA = function(dat, assay, colour, ...) {
 }
 
 
+#' @title Relative Log Expression (RLE) plot
+#'
+#' @param dat SummarizedExperiment object data
+#' @param assay An assay to use in a SummarizedExperiment object
+#' @param group A vector to assess group median.
+#'
+#' @return RLE plot
+#'
+#' @importFrom ggplot2 ggplot aes geom_boxplot geom_hline
+#' @importFrom tidyr pivot_longer
+#' @importFrom dplyr %>%
+#' @importFrom SummarizedExperiment assay
+#'
 #' @export
 plotRLE = function(dat, assay, group = NULL) {
     # Assumes the assay to use is logged and no missing values
@@ -52,6 +80,17 @@ plotRLE = function(dat, assay, group = NULL) {
 }
 
 
+#' @title Metabolite run plot
+#'
+#' @param dat SummarizedExperiment object data
+#' @param assay An assay to use in a SummarizedExperiment object
+#' @param colour A group vector to colour the points in the PCA plot
+#'
+#' @return A list of run plots
+#'
+#' @importFrom dplyr filter %>%
+#' @importFrom ggplot2 ggplot aes geom_point ggtitle
+#'
 #' @export
 plotRun = function(dat, assay, colour) {
     mat = wide_to_long(dat, assay)
@@ -66,6 +105,9 @@ plotRun = function(dat, assay, colour) {
     }, USE.NAMES = TRUE, simplify = FALSE)
 }
 
+
+#' @importFrom dplyr %>% filter
+#' @importFrom ggplot2 ggplot geom_point ggtitle aes
 metabolite_plot = function(dat, comp, highlight, pkg, colour_by, colour_vec) {
     mat = wide_to_long(dat, comp, highlight)
     metabolites = unique(mat$Metabolite)
@@ -96,6 +138,8 @@ metabolite_plot = function(dat, comp, highlight, pkg, colour_by, colour_vec) {
 }
 
 
+#' @importFrom SummarizedExperiment assay
+#' @importFrom tidyr pivot_longer
 wide_to_long = function(i, assay, colour) {
     mat = SummarizedExperiment::assay(i, assay) %>%
         as.data.frame()

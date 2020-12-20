@@ -1,4 +1,4 @@
-#' Construct SummarizedExperiment object from a matrix
+#' @title Construct SummarizedExperiment object from a matrix
 #'
 #' @param dat A p*n data frame or a matrix object where p is the number of
 #' metabolites and n is the number of samples

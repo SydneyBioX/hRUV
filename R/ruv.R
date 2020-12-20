@@ -1,15 +1,4 @@
-#' RUV function for metabolomics data
-#'
-#' @param dat A SummarizedExperiment object
-#' @param assay_name An assay to perform RUV
-#' @param k k for RUVIII
-#' @param ctrl type of replication to utilise for design matrix
-#' @param new_assay A name of the newY in the SummarizedExperiment object
-#' @param replicate_mat A user defined design matrix for RUVIII
-#'
 #' @importFrom SummarizedExperiment assay
-#'
-#'
 getRUV = function(dat, assay, k = 5, rep, negCtl = NULL, newAssay = NULL) {
     # Negative control metabolites
     if (is.null(negCtl)) {
@@ -31,16 +20,23 @@ getRUV = function(dat, assay, k = 5, rep, negCtl = NULL, newAssay = NULL) {
 }
 
 
-#' Hierarchical RUV
+#' @title Hierarchical RUV
 #'
-#' @param dat_list list of SummarizedExperiment objects
-#' @param assay Name of assay to merge
-#' @param k \code{k} for RUV
-#' @param rep NULL
-#' @param hOrder Order of hierarchical normalisation
-#' @param negCtl Type of controls to use
-#' @param newAssay NULL
-#' @param balanced a logical value
+#' @param dat_list A list of SummarizedExperiment data where each object
+#' represents a batch.
+#' @param assay An assay name to measure the missingness of the signals.
+#' @param k Parameter \code{k} for RUV-III.
+#' @param rep A name of the variable in the colData of each SummarizedExperiment
+#'  data in the \code{dat_list}. This variable in colData
+#' should be a logical vector of whic samples are a intra-batch replicate
+#' @param hOrder A vector of batch names from names of list \code{dat_list}.
+#' @param negCtl A vector of row IDs for selection of stable matbolites to be
+#' used as negative control in RUV.
+#' @param newAssay A name of the new assay for cleaned (preprocessed) data.
+#' @param balanced A type of hierarchical approach, "concatenate" or "balanced".
+#' Default is "concatenate" approach.
+#'
+#' @return A normalised data as SummarizedExperiment object.
 #'
 #' @importFrom SummarizedExperiment assay
 #'
@@ -86,6 +82,10 @@ hierarchy = function(dat_list, assay, k = 5, rep, newAssay = NULL, balanced = FA
         .concatenating_tree(dat_list, assay = newAssay, k=k, rep = rep, negCtl = negCtl, hOrder = hOrder)
     }
 }
+
+
+
+
 
 #' @importFrom SummarizedExperiment cbind
 .balanced_tree = function(dat_list, assay, k, rep, negCtl, hOrder) {

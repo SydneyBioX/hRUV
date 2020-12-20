@@ -4,29 +4,19 @@
 \alias{expDesign}
 \title{Generate experiment design}
 \usage{
-expDesign()
+expDesign(n = 1000, br = 5, ncol = 10, nrow = 10)
 }
 \arguments{
 \item{n}{number of samples for the design}
 
-\item{sr}{number of biological samples for short replicates per row}
-
 \item{br}{number of biological samples for batch replicates}
 
-\item{lr}{number of biological samples for long replicates}
-
-\item{fsr}{frequency of short replicates. Default to every row}
-
-\item{flr}{frequency of long replicates. Default to every 50 row}
-
-\item{ncol}{number of columns for matrix}
+\item{ncol}{number of columns per plate}
 
 \item{nrow}{number of samples per plate}
-
-\item{type}{type selection of custom plate size or 96 well plate (default)}
 }
 \value{
-
+A matrix of experiment design
 }
 \description{
 Generate experiment design

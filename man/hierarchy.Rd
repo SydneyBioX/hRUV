@@ -16,21 +16,29 @@ hierarchy(
 )
 }
 \arguments{
-\item{dat_list}{list of SummarizedExperiment objects}
+\item{dat_list}{A list of SummarizedExperiment data where each object
+represents a batch.}
 
-\item{assay}{Name of assay to merge}
+\item{assay}{An assay name to measure the missingness of the signals.}
 
-\item{k}{\code{k} for RUV}
+\item{k}{Parameter \code{k} for RUV-III.}
 
-\item{rep}{NULL}
+\item{rep}{A name of the variable in the colData of each SummarizedExperiment
+ data in the \code{dat_list}. This variable in colData
+should be a logical vector of whic samples are a intra-batch replicate}
 
-\item{newAssay}{NULL}
+\item{newAssay}{A name of the new assay for cleaned (preprocessed) data.}
 
-\item{balanced}{a logical value}
+\item{balanced}{A type of hierarchical approach, "concatenate" or "balanced".
+Default is "concatenate" approach.}
 
-\item{negCtl}{Type of controls to use}
+\item{negCtl}{A vector of row IDs for selection of stable matbolites to be
+used as negative control in RUV.}
 
-\item{hOrder}{Order of hierarchical normalisation}
+\item{hOrder}{A vector of batch names from names of list \code{dat_list}.}
+}
+\value{
+A normalised data as SummarizedExperiment object.
 }
 \description{
 Hierarchical RUV
