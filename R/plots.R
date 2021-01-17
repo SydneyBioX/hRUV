@@ -93,14 +93,14 @@ plotRLE = function(dat, assay, group = NULL) {
 #'
 #' @export
 plotRun = function(dat, assay, colour) {
-    mat = wide_to_long(dat, assay)
+    mat = wide_to_long(dat, assay, colour)
     metabolites = unique(mat$Metabolite)
     sapply(metabolites, function(j) {
         tmp = mat %>%
             dplyr::filter(grepl(paste("^", j, "$", sep = ""), Metabolite))
         p = ggplot2::ggplot(tmp, ggplot2::aes(x = run, y = value, color = colour)) +
             ggplot2::geom_point() +
-            ggplot2::ggtitle(paste(j, ", ", comp))
+            ggplot2::ggtitle(paste(j, ", ", assay))
         p
     }, USE.NAMES = TRUE, simplify = FALSE)
 }
