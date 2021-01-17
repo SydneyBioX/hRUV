@@ -9,10 +9,10 @@ Description: hRUV is a package developed for removal of unwanted variation in
     Mass-spectrometry based metabolomics data. hRUV consists of various approaches 
     to removing intra- and inter-batch effects and a systematic evaluation framework.
 License: GPL-3
-Encoding: UTF-8
+Encoding: UTF-8 
 LazyData: true
 RoxygenNote: 7.1.1
-Depends: R (>= 4.0.0)
+Depends: R (>= 3.6.0)
 Imports:
     SummarizedExperiment,
     dplyr,
