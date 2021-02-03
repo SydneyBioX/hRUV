@@ -18,7 +18,9 @@ library(devtools)
 devtools::install_github("SydneyBioX/hRUV")
 ```
 
+## Vignette
 
+The vignette of the package is available under the `vignettes` folder for detailed demontration to hRUV package. 
 
 ## Contact us
 

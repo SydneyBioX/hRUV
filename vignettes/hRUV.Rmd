@@ -1,0 +1,177 @@
+---
+title: "An introduction to hRUV package"
+author:
+- name: Taiyun Kim
+  affiliation:
+  - School of Mathematics and Statistics, The University of Sydney
+  - Computational Systems Biology Group, Children’s Medical Research Institute, Faculty of Medicine and Health, The University of Sydney
+  - Charles Perkins Centre, The University of Sydney
+output:
+  BiocStyle::html_document:
+    toc_newpage: true
+    fig_retina: NULL
+package: BiocStyle
+vignette: >
+  %\VignetteIndexEntry{An introduction to PhosR package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+`hRUV` is a package for normalisation of multiple batches of metabolomics data in a hierarchical strategy with use of samples replicates in a large-scale studies. The tool utilises 2 types of replicates: intra-batch and inter-batch replicates to estimate the unwatned variation within and between batches with RUV-III. We have designed the replicate embedding arrangements within and between batches from http://shiny.maths.usyd.edu.au/hRUV. Our novel tool is a novel hierarchical approach to removing unwanted variation by harnessing information from sample replicates embedded in the seequence of experimental runs/batches and applying signal drift correction with robust linear or non-linear smoothers.
+
+Below is a schematic overview of hRUV framework.
+
+![Overview of hRUV methods](../inst/overview_v1.png)
+
+The purpose of this vignette is to illustrate use of `hRUV`.
+
+# Installation
+
+Install the R package from GitHub using the `devtools` package:
+
+```{r, eval = FALSE}
+if (!("devtools" %in% rownames(installed.packages())))
+    install.packages("devtools")
+
+library(devtools)
+devtools::install_github("SydneyBioX/hRUV")
+```
+
+# Loading packages and data
+
+First, we will load the hRUV package and other packages required for the demonstration. If you haven't installed the packages yet, please follow the steps above. You can install `dplyr` package with the command `install.packages("dplyr")` and `SummarizedExperiment` object
+
+
+```{r}
+suppressPackageStartupMessages({
+    library(hRUV)
+    library(dplyr)
+    library(SummarizedExperiment)
+})
+# You can install dplyr package with the command 
+# install.packages("dplyr") 
+
+# To install SummarizedExperiment, 
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# 
+# BiocManager::install("SummarizedExperiment")
+
+```
+
+
+
+For demonstration purposes, we provide a first 5 batches of BioHEART-CT metabolomics data. The data contains metabolite signals of each patients, and contains sample replicate within and between batches. The data is deposited at https://github.com/SydneyBioX/BioHEART_metabolomics.
+
+```{r}
+data("metabolomics_demo")
+class(b1)
+b1
+b2
+```
+
+The data is already formatted in to a `SummarizedExperiment` object.
+
+# Data cleaning
+
+We will now perform preprocessing of all batches.
+
+```{r}
+dat_list = list(
+    "Batch1" = b1,
+    "Batch2" = b2,
+    "Batch3" = b3,
+    "Batch4" = b4,
+    "Batch5" = b5
+)
+# checking the dimensions of the data
+lapply(dat_list, dim)
+
+# Log transform raw assay
+dat_list = lapply(dat_list, function(dat) {
+    assay(dat, "logRaw", withDimnames = FALSE) = log2(assay(dat, "raw") + 1)
+    dat
+})
+
+# Setting the order of batches
+h_order = paste("Batch", 1:5, sep = "")
+h_order = h_order[order(h_order)]
+
+# checking the dimensions of the data before cleaning
+lapply(dat_list, dim)
+
+dat_list = hRUV::clean(dat_list, threshold = 0.5, 
+  method = "intersect", assay = "logRaw", newAssay = "rawImpute")
+
+# checking the dimensions of the data after cleaning
+lapply(dat_list, dim)
+
+```
+
+We have filtered metabolites with more than 50% of missing values per batch and selected metabolites that are quantified across all batches (intersect) with `clean` function. After filtering process, `clean` function performs k-nearest neighbour imputation. The new imputed assay is named as `rawImpute`. After cleaning we now have 61 intersecting metabolites quantified for each batch.
+
+
+# Perfrom hRUV
+
+We can proceed to perform intra- and inter-batch normalisation with hRUV.
+
+```{r}
+dat = hruv(
+    dat_list = dat_list,
+    assay = "rawImpute",
+    intra = "loessShort",
+    inter = "concatenate",
+    intra_k = 5, inter_k = 5,
+    pCtlName = "biological_sample",
+    negCtl = NULL,
+    intra_rep = "short_replicate",
+    inter_rep = "batch_replicate",
+    
+)
+```
+
+Here, we perform hRUV on rawImpute assay. For intra batch normalisation, we perform loess smoothing on samples and RUV-III using short replicates with parameter k set to 5. For inter batch normalisation, we perform concatenating hierarchical structure using batch replicate samples. The RUV-III paramter k is also set to 5 for inter-batch normalisation.
+
+We can now compare before and after hruv normalisation.
+
+## PCA
+
+```{r, fig.width=10}
+library(ggpubr)
+p1 = hRUV::plotPCA(dat, assay = "rawImpute", colour = dat$batch_info)
+p2 = hRUV::plotPCA(dat, assay = "loessShort_concatenate", colour = dat$batch_info)
+ggarrange(p1, p2, nrow = 1)
+```
+
+From the above PCA plot, you can see that the assay before normalisation has strong batch effect. The assay after normalisation on the right panel does no longer show batch effect.
+
+
+## Run plot
+
+```{r}
+p1 = hRUV::plotRun(dat, assay = "rawImpute", colour = dat$batch_info)
+p2 = hRUV::plotRun(dat, assay = "loessShort_concatenate", colour = dat$batch_info)
+ggarrange(p1$`1-methylhistamine`, p2$`1-methylhistamine`, nrow = 2)
+```
+
+The run plot above shows signal drift present in the raw data for metabolite 1-methylhistamine. This is corrected after hRUV normalisation.
+
+```{r}
+ggarrange(p1$GlucosePos2, p2$GlucosePos2, nrow = 2)
+```
+
+Further, in metabolite GlucosePos2, the assay before normalisation shows strong batch effects, but they are corrected after hRUV normalisation.
+
+# SessionInfo
+
+```{r}
+sessionInfo()
+```
+
+
