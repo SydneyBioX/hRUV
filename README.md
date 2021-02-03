@@ -4,7 +4,7 @@
 
 ## hRUV overview
 
-<img src="inst/overview.png" align="center" />
+<img src="https://github.com/SydneyBioX/hRUV/blob/main/inst/overview_v1.png" align="center" />
 
 ## Installation
 
