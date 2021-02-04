@@ -15,12 +15,12 @@ if (!("devtools" %in% rownames(installed.packages())))
     install.packages("devtools")
 
 library(devtools)
-devtools::install_github("SydneyBioX/hRUV")
+devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE)
 ```
 
 ## Vignette
 
-The vignette of the package is available under the `vignettes` folder for detailed demontration to hRUV package. 
+The vignette of the package is available under the `vignettes` folder for detailed demontration to hRUV package.
 
 ## Contact us
 
