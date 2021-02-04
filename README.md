@@ -6,6 +6,25 @@
 
 <img src="https://github.com/SydneyBioX/hRUV/blob/main/inst/overview_v1.png" align="center" width=100% />
 
+## Software requirements
+
+This package has been tested for *macOS Big Sur (11.1)* and *Linux Debian 10 (buster)* with R version 4.0.3.
+
+### R package dependecies
+
+```
+SummarizedExperiment
+dplyr
+tidyr
+rlang
+ggplot2
+plotly
+S4Vectors
+tibble
+DMwR2
+MASS
+```
+
 ## Installation
 
 Install the R package from GitHub using the `devtools` package:
