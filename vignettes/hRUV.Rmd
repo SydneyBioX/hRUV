@@ -12,7 +12,7 @@ output:
     fig_retina: NULL
 package: BiocStyle
 vignette: >
-  %\VignetteIndexEntry{An introduction to PhosR package}
+  %\VignetteIndexEntry{An introduction to hRUV package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
