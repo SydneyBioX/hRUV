@@ -12,8 +12,9 @@ This package has been tested for *macOS Big Sur (11.1)* and *Linux Debian 10 (bu
 
 ### R package dependecies
 
+### CRAN
+
 ```
-SummarizedExperiment
 dplyr
 tidyr
 rlang
@@ -23,8 +24,15 @@ S4Vectors
 tibble
 DMwR2
 MASS
+```
+
+### Bioconductor
+
+```
+SummarizedExperiment
 impute
 ```
+
 
 ## Installation
 
@@ -42,7 +50,7 @@ devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE)
 
 The vignette of the package is available under the `vignettes` folder for detailed demontration to hRUV package.
 
-You can also open the compiled vignette from R console with `browseVignette("hRUV")`.
+You can also open the compiled vignette from R console with `browseVignettes("hRUV")`.
 
 ## Contact us
 

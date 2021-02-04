@@ -40,7 +40,7 @@ if (!("devtools" %in% rownames(installed.packages())))
     install.packages("devtools")
 
 library(devtools)
-devtools::install_github("SydneyBioX/hRUV")
+devtools::install_github("SydneyBioX/hRUV", build_vignettes = TRUE)
 ```
 
 # Loading packages and data
