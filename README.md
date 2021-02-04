@@ -41,6 +41,8 @@ devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE)
 
 The vignette of the package is available under the `vignettes` folder for detailed demontration to hRUV package.
 
+You can also open the compiled vignette from R console with `browseVignette("hRUV")`.
+
 ## Contact us
 
 If you have any enquiries, especially about performing hRUV to integrate your metabolomics data, please contact taiyun.kim@sydney.edu.au. We are also happy to receive any suggestions and comments.
