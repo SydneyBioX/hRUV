@@ -23,8 +23,10 @@ Imports:
     S4Vectors,
     tibble,
     DMwR2,
-    MASS
+    MASS,
+    impute
 VignetteBuilder: knitr
 Suggests:
     testthat,
-    knitr
+    knitr,
+    gridExtra

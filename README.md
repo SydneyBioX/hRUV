@@ -23,6 +23,7 @@ S4Vectors
 tibble
 DMwR2
 MASS
+impute
 ```
 
 ## Installation

@@ -143,10 +143,10 @@ We can now compare before and after hruv normalisation.
 ## PCA
 
 ```{r, fig.width=10}
-library(ggpubr)
+library(gridExtra)
 p1 = hRUV::plotPCA(dat, assay = "rawImpute", colour = dat$batch_info)
 p2 = hRUV::plotPCA(dat, assay = "loessShort_concatenate", colour = dat$batch_info)
-ggarrange(p1, p2, nrow = 1)
+grid.arrange(p1, p2, nrow = 1)
 ```
 
 From the above PCA plot, you can see that the assay before normalisation has strong batch effect. The assay after normalisation on the right panel does no longer show batch effect.
@@ -157,13 +157,13 @@ From the above PCA plot, you can see that the assay before normalisation has str
 ```{r}
 p1 = hRUV::plotRun(dat, assay = "rawImpute", colour = dat$batch_info)
 p2 = hRUV::plotRun(dat, assay = "loessShort_concatenate", colour = dat$batch_info)
-ggarrange(p1$`1-methylhistamine`, p2$`1-methylhistamine`, nrow = 2)
+grid.arrange(p1$`1-methylhistamine`, p2$`1-methylhistamine`, nrow = 2)
 ```
 
 The run plot above shows signal drift present in the raw data for metabolite 1-methylhistamine. This is corrected after hRUV normalisation.
 
 ```{r}
-ggarrange(p1$GlucosePos2, p2$GlucosePos2, nrow = 2)
+grid.arrange(p1$GlucosePos2, p2$GlucosePos2, nrow = 2)
 ```
 
 Further, in metabolite GlucosePos2, the assay before normalisation shows strong batch effects, but they are corrected after hRUV normalisation.
