@@ -42,6 +42,7 @@ Install the R package from GitHub using the `devtools` package:
 if (!("devtools" %in% rownames(installed.packages())))
     install.packages("devtools")
 
+# Tested on devtools version 2.3.2.
 library(devtools)
 devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE)
 ```
