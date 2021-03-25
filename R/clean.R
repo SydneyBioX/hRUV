@@ -66,9 +66,15 @@ clean = function(dat_list, threshold = 0.5, method = c("intersect", "union"),
 .select_mets = function(dat_list, threshold, assay) {
     keep_mets = lapply(dat_list, function(dat) {
         mat = SummarizedExperiment::assay(dat, assay)
-        rownames(dat)[-which(apply(mat, 1, function(i) {
+        rmID = which(apply(mat, 1, function(i) {
             sum(is.na(i))/length(i) > threshold
-        }))]
+        }))
+        if (length(rmID)) {
+            rName = rownames(dat)[-rmID]
+        } else {
+            rName = rownames(dat)
+        }
+        rName
     })
     Reduce(intersect, keep_mets)
 }
