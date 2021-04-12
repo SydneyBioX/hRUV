@@ -1,7 +1,7 @@
 Package: hRUV
 Type: Package
 Title: Hierarchical approach to normalise large-scale metabolomics data
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Taiyun", "Kim", email = "taiyun.kim91@gmail.com", role = c("aut", "cre"))
     )

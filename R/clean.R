@@ -122,14 +122,18 @@ clean = function(dat_list, threshold = 0.5, method = c("intersect", "union"),
 }
 
 .impute = function(dat, assay, newAssay) {
-    tmp = SummarizedExperiment::assay(dat, assay) %>%
-        as.matrix() %>%
-        impute::impute.knn()
+    if (any(is.na(SummarizedExperiment::assay(dat, assay)))) {
+        tmp = SummarizedExperiment::assay(dat, assay) %>%
+            as.matrix() %>%
+            impute::impute.knn()
         # t() %>%
         # as.data.frame() %>%
         # DMwR2::knnImputation() %>%
         # t()
-    SummarizedExperiment::assay(dat, newAssay, withDimnames = FALSE) = tmp$data
+        SummarizedExperiment::assay(dat, newAssay, withDimnames = FALSE) = tmp$data
+    } else {
+        SummarizedExperiment::assay(dat, newAssay, withDimnames = FALSE) = SummarizedExperiment::assay(dat, assay)
+    }
     dat
 }
 
