@@ -49,7 +49,7 @@ devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE)
 
 ## Vignette
 
-The vignette is available at [https://sydneybiox.github.io/hRUV](https://sydneybiox.github.io/hRUV/). Alternatively, it can be accessed with `browseVignettes("hRUV")` in your R console. 
+The vignette is available at https://sydneybiox.github.io/hRUV/. Alternatively, it can be accessed with `browseVignettes("hRUV")` in your R console. 
 
 ## Contact us
 
