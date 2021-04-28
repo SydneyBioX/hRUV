@@ -4,7 +4,7 @@
 
 ## hRUV overview
 
-<img src="https://github.com/SydneyBioX/hRUV/blob/main/inst/overview_v1.png" align="center" width=100% />
+<img src="https://raw.githubusercontent.com/SydneyBioX/hRUV/main/inst/overview_v1.png" align="center" width=100% />
 
 ## Software requirements
 
@@ -49,9 +49,7 @@ devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE)
 
 ## Vignette
 
-The vignette of the package is available under the `vignettes` folder for detailed demontration to hRUV package.
-
-You can also open the compiled vignette from R console with `browseVignettes("hRUV")`.
+The vignette is available at [https://sydneybiox.github.io/hRUV](https://sydneybiox.github.io/hRUV/). Alternatively, it can be accessed with `browseVignettes("hRUV")` in your R console. 
 
 ## Contact us
 
