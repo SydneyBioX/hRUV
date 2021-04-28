@@ -44,7 +44,7 @@ jobs:
             BiocManager::install("impute")
           if (!requireNamespace("S4Vectors", quietly = TRUE))
             BiocManager::install("S4Vectors")
-
+          BiocManager::install("BiocStyle")
         shell: Rscript {0}
 
       - name: Install package
