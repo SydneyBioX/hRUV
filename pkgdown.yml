@@ -1,0 +1,7 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  hRUV: hRUV.html
+last_built: 2021-04-28T00:38Z
+
