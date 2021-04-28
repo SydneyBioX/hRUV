@@ -36,6 +36,15 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           install.packages("pkgdown", type = "binary")
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+          if (!requireNamespace("SummarizedExperiment", quietly = TRUE))
+            BiocManager::install("SummarizedExperiment")
+          if (!requireNamespace("impute", quietly = TRUE))
+            BiocManager::install("impute")
+          if (!requireNamespace("S4Vectors", quietly = TRUE))
+            BiocManager::install("S4Vectors")
+
         shell: Rscript {0}
 
       - name: Install package
