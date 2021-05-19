@@ -1,6 +1,6 @@
 #' @title hRUV - intra- and hierarchical inter-batch normalisation.
 #'
-#' @description Hirarchical approach to remove unwanted variation across
+#' @description Hierarchical approach to remove unwanted variation across
 #' multiple batches of data.
 #'
 #' For \code{intra} method, \code{rlm} or \code{loess} methods fits robust
@@ -27,10 +27,10 @@
 #' used as negative control in RUV.
 #' @param intra_rep A name of the variable in the colData of each
 #' SummarizedExperiment data in the \code{dat_list}. This variable in colData
-#' should be a logical vector of whic samples are a intra-batch replicate
+#' should be a logical vector of which samples are an intra-batch replicate
 #' @param inter_rep A name of the variable in the colData of each
 #' SummarizedExperiment data in the \code{dat_list}. This variable in colData
-#' should be a logical vector of which samples are a inter-batch replicate
+#' should be a logical vector of which samples are an inter-batch replicate
 #' @param hOrder A vector of batch names from names of list \code{dat_list}.
 #' @param newAssay A name of the new assay for cleaned (preprocessed) data.
 #'

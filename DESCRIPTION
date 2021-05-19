@@ -29,4 +29,5 @@ VignetteBuilder: knitr
 Suggests:
     testthat,
     knitr,
-    gridExtra
+    gridExtra,
+    rmarkdown
