@@ -1,16 +1,63 @@
 #' @importFrom SummarizedExperiment assay
-getRUV = function(dat, assay, k = 5, rep, negCtl = NULL, newAssay = NULL) {
+getRUV = function(dat, assay, k = 5, rep, negCtl = NULL, newAssay = NULL, replicate_mat = NULL) {
     # Negative control metabolites
     if (is.null(negCtl)) {
         negCtl = seq(nrow(dat))
     }
-    replicate_mat = replicate.matrix(dat[[rep]])
-    dataRUV = t(SummarizedExperiment::assay(dat, assay))
-    sample_grand_mean = mean(dataRUV)
-    dataRUV = dataRUV - sample_grand_mean
+    if (is.null(replicate_mat)) {
+        if (rep == "pool") {
+            replication = dat$sample_name
+            replication[which(dat[[rep]])] = "Pool"
+            replicate_mat = replicate.matrix(replication)
+        } else if (rep == "batch_replicate") {
+            replication = dat$sample_name
+            replication = gsub("\\*{3}", "",replication)
 
-    ruvCorrected = RUVIII(Y = dataRUV, M = replicate_mat, ctl = negCtl, return.info = TRUE, k = k)
-    ruvCorrected$newY = ruvCorrected$newY + sample_grand_mean
+            replication[dat$pool] = paste("Pool", 1:sum(dat$pool))
+            replicate_mat = replicate.matrix(replication)
+
+        } else if (rep == "short_replicate") {
+            replication = dat$sample_name
+            replicates = dat$sample_name[dat$short_replicate]
+
+            replicates = gsub("\\*", "", replicates[which(grepl("^[0-9]+\\*$", replicates))])
+
+            replicates = paste("(^", paste(replicates, collapse = "\\*{0,1}$)|(^"), "\\*{0,1}$)", sep = "")
+            replication[which(grepl(replicates, replication))] = gsub("\\*", "", replication[which(grepl(replicates, replication))])
+
+            # replicates = dat$sample_name[dat$short_replicate]
+            # replicates = paste("(^", paste(replicates, collapse = "\\*{1}$)|(^"), "\\**$)", sep = "")
+            # replication[which(grepl(replicates, replication))] = gsub("\\*", "", replication[which(grepl(replicates, replication))])
+
+
+            replicate_mat = replicate.matrix(replication)
+
+        }
+    }
+
+    dataRUV = t(SummarizedExperiment::assay(dat, assay))
+    # if (adjust == "mean") {
+    #     sample_grand_mean = mean(dataRUV)
+    #     dataRUV = dataRUV - sample_grand_mean
+    # } else if (adjust == "rowMean") {
+    #     sample_grand_mean = colMeans(dataRUV)
+    #     dataRUV = t(t(dataRUV) - sample_grand_mean)
+    # }
+    means = colMeans(dataRUV)
+    data_stand <- apply(dataRUV, 1, function(x) x - means)
+
+
+    ruvCorrected = RUVIII(Y = data_stand, M = replicate_mat, ctl = negCtl, return.info = TRUE, k = k)
+
+    ruvCorrected$newY <- apply(ruvCorrected$newY, 1, function(x) x + means)
+
+
+    # if (adjust == "mean") {
+    #     ruvCorrected$newY = ruvCorrected$newY + sample_grand_mean
+    # } else if (adjust == "rowMean") {
+    #     ruvCorrected$newY = t(t(ruvCorrected$newY) + sample_grand_mean)
+    # }
+
 
     if (is.null(newAssay)) {
         newAssay = assay
@@ -127,8 +174,18 @@ hierarchy = function(dat_list, assay, k = 5, rep, newAssay = NULL, balanced = FA
             #     assay_name = assay,
             #     data_name = "combined"
             # )
-            dat_concat = do.call(SummarizedExperiment::cbind, dat_list_sub)
             batch = names(dat_list_sub)
+            prev_sample = dat_list_sub[[batch[1]]]$sample_names
+            next_sample = dat_list_sub[[batch[2]]]$sample_names
+            # next_sample = gsub("\\*{3}", "", next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)])
+            next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)] = gsub("\\*{3}", "", next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)])
+
+            replication = c(prev_sample, next_sample)
+            replication[which(grepl("pool", replication, ignore.case = TRUE))] = paste("Pool ", seq(length(which(grepl("pool", replication, ignore.case = TRUE)))))
+            replicate_mat = replicate.matrix(replication)
+
+            dat_concat = do.call(SummarizedExperiment::cbind, dat_list_sub)
+            # batch = names(dat_list_sub)
             if ((is.null(dat_list_sub[[batch[1]]]$batch_info)) |
                     (is.null(dat_list_sub[[batch[1]]]$batch_info))) {
                 dat_concat[["batch_info"]] = c(
@@ -137,7 +194,7 @@ hierarchy = function(dat_list, assay, k = 5, rep, newAssay = NULL, balanced = FA
                 )
             }
             dat = dat_concat
-            dat = getRUV(dat, assay = assay, k = k, rep = rep, negCtl = negCtl)
+            dat = getRUV(dat, assay = assay, k = k, rep = rep, negCtl = negCtl, replicate_mat = replicate_mat)
             dat
         })
     }
@@ -160,6 +217,16 @@ hierarchy = function(dat_list, assay, k = 5, rep, newAssay = NULL, balanced = FA
         #     assay_name = new_assay,
         #     data_name = "combined"
         # )
+
+        prev_sample = dat$sample_name
+        next_sample = next_batch$sample_name
+        # next_sample = gsub("\\*{3}", "", next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)])
+        next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)] = gsub("\\*{3}", "", next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)])
+
+        replication = c(prev_sample, next_sample)
+        replication[which(grepl("pool", replication, ignore.case = TRUE))] = paste("Pool ", seq(length(which(grepl("pool", replication, ignore.case = TRUE)))))
+        replicate_mat = replicate.matrix(replication)
+
         dat_concat = SummarizedExperiment::cbind(dat, next_batch)
 
         dat = dat_concat
@@ -178,7 +245,7 @@ hierarchy = function(dat_list, assay, k = 5, rep, newAssay = NULL, balanced = FA
         # dat = get_ruv(dat, assay_name = new_assay, k = k, ctrl = ctrl,
         #     new_assay = new_assay, replicate_mat = replication_matrix,
         #     neg_mets = neg_mets, alpha = alpha)
-        dat = getRUV(dat, assay = assay, k = k, rep = rep, negCtl = negCtl)
+        dat = getRUV(dat, assay = assay, k = k, rep = rep, negCtl = negCtl, replicate_mat = replicate_mat)
     }
     dat
 

@@ -1,7 +1,7 @@
 Package: hRUV
 Type: Package
 Title: Hierarchical approach to normalise large-scale metabolomics data
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person("Taiyun", "Kim", email = "taiyun.kim91@gmail.com", role = c("aut", "cre"))
     )
@@ -29,4 +29,5 @@ VignetteBuilder: knitr
 Suggests:
     testthat,
     knitr,
-    gridExtra
+    gridExtra,
+    rmarkdown

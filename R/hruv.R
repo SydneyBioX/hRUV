@@ -27,7 +27,7 @@
 #' used as negative control in RUV.
 #' @param intra_rep A name of the variable in the colData of each
 #' SummarizedExperiment data in the \code{dat_list}. This variable in colData
-#' should be a logical vector of whic samples are a intra-batch replicate
+#' should be a logical vector of which samples are a intra-batch replicate
 #' @param inter_rep A name of the variable in the colData of each
 #' SummarizedExperiment data in the \code{dat_list}. This variable in colData
 #' should be a logical vector of which samples are a inter-batch replicate

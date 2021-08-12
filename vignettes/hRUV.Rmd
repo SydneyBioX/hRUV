@@ -131,7 +131,7 @@ dat = hruv(
     pCtlName = "biological_sample",
     negCtl = NULL,
     intra_rep = "short_replicate",
-    inter_rep = "batch_replicate",
+    inter_rep = "batch_replicate"
     
 )
 ```
