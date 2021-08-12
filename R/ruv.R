@@ -35,7 +35,7 @@ getRUV = function(dat, assay, k = 5, rep, negCtl = NULL, newAssay = NULL, replic
         }
     }
 
-    dataRUV = t(SummarizedExperiment::assay(dat, assay))
+    dataRUV = SummarizedExperiment::assay(dat, assay)
     # if (adjust == "mean") {
     #     sample_grand_mean = mean(dataRUV)
     #     dataRUV = dataRUV - sample_grand_mean
@@ -43,13 +43,13 @@ getRUV = function(dat, assay, k = 5, rep, negCtl = NULL, newAssay = NULL, replic
     #     sample_grand_mean = colMeans(dataRUV)
     #     dataRUV = t(t(dataRUV) - sample_grand_mean)
     # }
-    means = colMeans(dataRUV)
-    data_stand <- apply(dataRUV, 1, function(x) x - means)
+    means = rowMeans(dataRUV)
+    data_stand <- apply(dataRUV, 2, function(x) x - means)
 
 
-    ruvCorrected = RUVIII(Y = data_stand, M = replicate_mat, ctl = negCtl, return.info = TRUE, k = k)
+    ruvCorrected = t(RUVIII(Y = t(data_stand), M = replicate_mat, ctl = negCtl, k = k))
 
-    ruvCorrected$newY <- apply(ruvCorrected$newY, 1, function(x) x + means)
+    ruvCorrected <- apply(ruvCorrected, 2, function(x) x + means)
 
 
     # if (adjust == "mean") {
@@ -62,7 +62,7 @@ getRUV = function(dat, assay, k = 5, rep, negCtl = NULL, newAssay = NULL, replic
     if (is.null(newAssay)) {
         newAssay = assay
     }
-    SummarizedExperiment::assay(dat, newAssay) = t(ruvCorrected$newY)
+    SummarizedExperiment::assay(dat, newAssay) = ruvCorrected
     dat
 }
 
