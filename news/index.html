@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hierarchical RUV — hierarchy • hRUV</title>
+<title>Changelog • hRUV</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,7 @@
 
 
 
-<meta property="og:title" content="Hierarchical RUV — hierarchy" />
-<meta property="og:description" content="Hierarchical RUV" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -59,7 +58,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -109,78 +108,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Hierarchical RUV</h1>
-    
-    <div class="hidden name"><code>hierarchy.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    <p>Hierarchical RUV</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>hierarchy</span><span class='op'>(</span>
-  <span class='va'>dat_list</span>,
-  <span class='va'>assay</span>,
-  k <span class='op'>=</span> <span class='fl'>5</span>,
-  <span class='va'>rep</span>,
-  newAssay <span class='op'>=</span> <span class='cn'>NULL</span>,
-  balanced <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  negCtl <span class='op'>=</span> <span class='cn'>NULL</span>,
-  hOrder <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>dat_list</th>
-      <td><p>A list of SummarizedExperiment data where each object
-represents a batch.</p></td>
-    </tr>
-    <tr>
-      <th>assay</th>
-      <td><p>An assay name to measure the missingness of the signals.</p></td>
-    </tr>
-    <tr>
-      <th>k</th>
-      <td><p>Parameter <code>k</code> for RUV-III.</p></td>
-    </tr>
-    <tr>
-      <th>rep</th>
-      <td><p>A name of the variable in the colData of each SummarizedExperiment
- data in the <code>dat_list</code>. This variable in colData
-should be a logical vector of whic samples are a intra-batch replicate</p></td>
-    </tr>
-    <tr>
-      <th>newAssay</th>
-      <td><p>A name of the new assay for cleaned (preprocessed) data.</p></td>
-    </tr>
-    <tr>
-      <th>balanced</th>
-      <td><p>A type of hierarchical approach, "concatenate" or "balanced".
-Default is "concatenate" approach.</p></td>
-    </tr>
-    <tr>
-      <th>negCtl</th>
-      <td><p>A vector of row IDs for selection of stable matbolites to be
-used as negative control in RUV.</p></td>
-    </tr>
-    <tr>
-      <th>hOrder</th>
-      <td><p>A vector of batch names from names of list <code>dat_list</code>.</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A normalised data as SummarizedExperiment object.</p>
-
+    <div id="hruv-013" class="section level2">
+<h2 class="hasAnchor">
+<a href="#hruv-013" class="anchor"></a>hRUV 0.1.3</h2>
+<ul>
+<li>Fixed the standardisation in the RUV step</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 
