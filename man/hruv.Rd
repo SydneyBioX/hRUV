@@ -44,11 +44,11 @@ used as negative control in RUV.}
 
 \item{intra_rep}{A name of the variable in the colData of each
 SummarizedExperiment data in the \code{dat_list}. This variable in colData
-should be a logical vector of which samples are a intra-batch replicate}
+should be a logical vector of which samples are an intra-batch replicate}
 
 \item{inter_rep}{A name of the variable in the colData of each
 SummarizedExperiment data in the \code{dat_list}. This variable in colData
-should be a logical vector of which samples are a inter-batch replicate}
+should be a logical vector of which samples are an inter-batch replicate}
 
 \item{hOrder}{A vector of batch names from names of list \code{dat_list}.}
 
@@ -58,7 +58,7 @@ should be a logical vector of which samples are a inter-batch replicate}
 A normalised data as SummarizedExperiment object.
 }
 \description{
-Hirarchical approach to remove unwanted variation across
+Hierarchical approach to remove unwanted variation across
 multiple batches of data.
 
 For \code{intra} method, \code{rlm} or \code{loess} methods fits robust
