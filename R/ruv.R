@@ -175,8 +175,8 @@ hierarchy = function(dat_list, assay, k = 5, rep, newAssay = NULL, balanced = FA
             #     data_name = "combined"
             # )
             batch = names(dat_list_sub)
-            prev_sample = dat_list_sub[[batch[1]]]$sample_names
-            next_sample = dat_list_sub[[batch[2]]]$sample_names
+            prev_sample = dat_list_sub[[batch[1]]]$sample_name
+            next_sample = dat_list_sub[[batch[2]]]$sample_name
             # next_sample = gsub("\\*{3}", "", next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)])
             next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)] = gsub("\\*{3}", "", next_sample[which(gsub("\\*{3}", "", next_sample) %in% prev_sample)])
 

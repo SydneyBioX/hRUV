@@ -30,4 +30,5 @@ Suggests:
     testthat,
     knitr,
     gridExtra,
-    rmarkdown
+    rmarkdown,
+    BiocStyle
