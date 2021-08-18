@@ -47,7 +47,7 @@ if (!("devtools" %in% rownames(installed.packages())))
 
 # Tested on devtools version 2.3.2.
 library(devtools)
-devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE)
+devtools::install_github("SydneyBioX/hRUV", build_vignettes=TRUE, dependencies = TRUE)
 ```
 
 ## Vignette
