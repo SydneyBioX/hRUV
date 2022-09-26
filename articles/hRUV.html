@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hRUV</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/hRUV.html">Get started</a>
 </li>
@@ -67,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An introduction to hRUV package</h1>
-                        <h4 class="author">Taiyun Kim</h4>
+                        <h4 data-toc-skip class="author">Taiyun Kim</h4>
             <address class="author_afil">
       School of Mathematics and Statistics, The University of Sydney<br><div class="hidden name"><code>hRUV.Rmd</code></div>
 
@@ -76,264 +72,265 @@
 
     
     
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
-<p><code>hRUV</code> is a package for normalisation of multiple batches of metabolomics data in a hierarchical strategy with use of samples replicates in a large-scale studies. The tool utilises 2 types of replicates: intra-batch and inter-batch replicates to estimate the unwanted variation within and between batches with RUV-III. We have designed the replicate embedding arrangements within and between batches from <a href="http://shiny.maths.usyd.edu.au/hRUV" class="uri">http://shiny.maths.usyd.edu.au/hRUV</a>. Our novel tool is a novel hierarchical approach to removing unwanted variation by harnessing information from sample replicates embedded in the sequence of experimental runs/batches and applying signal drift correction with robust linear or non-linear smoothers.</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p><code>hRUV</code> is a package for normalisation of multiple batches of metabolomics data in a hierarchical strategy with use of samples replicates in a large-scale studies. The tool utilises 2 types of replicates: intra-batch and inter-batch replicates to estimate the unwanted variation within and between batches with RUV-III. We have designed the replicate embedding arrangements within and between batches from <a href="http://shiny.maths.usyd.edu.au/hRUV" class="external-link uri">http://shiny.maths.usyd.edu.au/hRUV</a>. Our novel tool is a novel hierarchical approach to removing unwanted variation by harnessing information from sample replicates embedded in the sequence of experimental runs/batches and applying signal drift correction with robust linear or non-linear smoothers.</p>
 <p>Below is a schematic overview of hRUV framework.</p>
 <div class="figure">
 <img src="../inst/overview_v1.png" alt=""><p class="caption">Overview of hRUV methods</p>
 </div>
 <p>The purpose of this vignette is to illustrate use of <code>hRUV</code>.</p>
 </div>
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h1>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the R package from GitHub using the <code>devtools</code> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"devtools"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">devtools</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SydneyBioX/hRUV"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"devtools"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SydneyBioX/hRUV"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="loading-packages-and-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#loading-packages-and-data" class="anchor"></a>Loading packages and data</h1>
-<p>First, we will load the hRUV package and other packages required for the demonstration. If you haven’t installed the packages yet, please follow the steps above. You can install <code>dplyr</code> package with the command <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("dplyr")</a></code> and <code>SummarizedExperiment</code> object</p>
+<div class="section level2">
+<h2 id="loading-packages-and-data">Loading packages and data<a class="anchor" aria-label="anchor" href="#loading-packages-and-data"></a>
+</h2>
+<p>First, we will load the hRUV package and other packages required for the demonstration. If you haven’t installed the packages yet, please follow the steps above. You can install <code>dplyr</code> package with the command <code>install.packages("dplyr")</code> and <code>SummarizedExperiment</code> object</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">hRUV</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/SummarizedExperiment">SummarizedExperiment</a></span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span>
-<span class="co"># You can install dplyr package with the command </span>
-<span class="co"># install.packages("dplyr") </span>
-
-<span class="co"># To install SummarizedExperiment, </span>
-<span class="co"># if (!requireNamespace("BiocManager", quietly = TRUE))</span>
-<span class="co">#     install.packages("BiocManager")</span>
-<span class="co"># </span>
-<span class="co"># BiocManager::install("SummarizedExperiment")</span></code></pre></div>
-<p>For demonstration purposes, we provide a first 5 batches of BioHEART-CT metabolomics data. The data contains metabolite signals of each patients, and contains sample replicate within and between batches. The data is deposited at <a href="https://github.com/SydneyBioX/BioHEART_metabolomics" class="uri">https://github.com/SydneyBioX/BioHEART_metabolomics</a>.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">hRUV</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/SummarizedExperiment" class="external-link">SummarizedExperiment</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co"># You can install dplyr package with the command </span></span>
+<span><span class="co"># install.packages("dplyr") </span></span>
+<span></span>
+<span><span class="co"># To install SummarizedExperiment, </span></span>
+<span><span class="co"># if (!requireNamespace("BiocManager", quietly = TRUE))</span></span>
+<span><span class="co">#     install.packages("BiocManager")</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># BiocManager::install("SummarizedExperiment")</span></span></code></pre></div>
+<p>For demonstration purposes, we provide a first 5 batches of BioHEART-CT metabolomics data. The data contains metabolite signals of each patients, and contains sample replicate within and between batches. The data is deposited at <a href="https://github.com/SydneyBioX/BioHEART_metabolomics" class="external-link uri">https://github.com/SydneyBioX/BioHEART_metabolomics</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"metabolomics_demo"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">b1</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "SummarizedExperiment"
-## attr(,"package")
-## [1] "SummarizedExperiment"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"metabolomics_demo"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">b1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "SummarizedExperiment"</span></span>
+<span><span class="co">## attr(,"package")</span></span>
+<span><span class="co">## [1] "SummarizedExperiment"</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">b1</span></code></pre></div>
-<pre><code>## class: SummarizedExperiment 
-## dim: 79 89 
-## metadata(1): name
-## assays(1): raw
-## rownames(79): 1-methylhistamine 2-Arachidonyl glycerol ... Valine
-##   Valine-d8
-## rowData names(1): metabolite
-## colnames(89): 1_Pool 0 2_26 ... 88_Pool 9 89_25
-## colData names(7): Sample sample_name ... biological_sample batch_info</code></pre>
+<code class="sourceCode R"><span><span class="va">b1</span></span></code></pre></div>
+<pre><code><span><span class="co">## class: SummarizedExperiment </span></span>
+<span><span class="co">## dim: 79 89 </span></span>
+<span><span class="co">## metadata(1): name</span></span>
+<span><span class="co">## assays(1): raw</span></span>
+<span><span class="co">## rownames(79): 1-methylhistamine 2-Arachidonyl glycerol ... Valine</span></span>
+<span><span class="co">##   Valine-d8</span></span>
+<span><span class="co">## rowData names(1): metabolite</span></span>
+<span><span class="co">## colnames(89): 1_Pool 0 2_26 ... 88_Pool 9 89_25</span></span>
+<span><span class="co">## colData names(7): Sample sample_name ... biological_sample batch_info</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">b2</span></code></pre></div>
-<pre><code>## class: SummarizedExperiment 
-## dim: 79 91 
-## metadata(1): name
-## assays(1): raw
-## rownames(79): 1-methylhistamine 2-Arachidonyl glycerol ... Valine
-##   Valine-d8
-## rowData names(1): metabolite
-## colnames(91): 1_Pool 1 2_115 ... 90_193 91_Pool 11
-## colData names(7): Sample sample_name ... biological_sample batch_info</code></pre>
+<code class="sourceCode R"><span><span class="va">b2</span></span></code></pre></div>
+<pre><code><span><span class="co">## class: SummarizedExperiment </span></span>
+<span><span class="co">## dim: 79 91 </span></span>
+<span><span class="co">## metadata(1): name</span></span>
+<span><span class="co">## assays(1): raw</span></span>
+<span><span class="co">## rownames(79): 1-methylhistamine 2-Arachidonyl glycerol ... Valine</span></span>
+<span><span class="co">##   Valine-d8</span></span>
+<span><span class="co">## rowData names(1): metabolite</span></span>
+<span><span class="co">## colnames(91): 1_Pool 1 2_115 ... 90_193 91_Pool 11</span></span>
+<span><span class="co">## colData names(7): Sample sample_name ... biological_sample batch_info</span></span></code></pre>
 <p>The data is already formatted in to a <code>SummarizedExperiment</code> object.</p>
 </div>
-<div id="data-cleaning" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-cleaning" class="anchor"></a>Data cleaning</h1>
+<div class="section level2">
+<h2 id="data-cleaning">Data cleaning<a class="anchor" aria-label="anchor" href="#data-cleaning"></a>
+</h2>
 <p>We will now perform preprocessing of all batches.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    <span class="st">"Batch1"</span> <span class="op">=</span> <span class="va">b1</span>,
-    <span class="st">"Batch2"</span> <span class="op">=</span> <span class="va">b2</span>,
-    <span class="st">"Batch3"</span> <span class="op">=</span> <span class="va">b3</span>,
-    <span class="st">"Batch4"</span> <span class="op">=</span> <span class="va">b4</span>,
-    <span class="st">"Batch5"</span> <span class="op">=</span> <span class="va">b5</span>
-<span class="op">)</span>
-<span class="co"># checking the dimensions of the data</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="va">dim</span><span class="op">)</span></code></pre></div>
-<pre><code>## $Batch1
-## [1] 79 89
-## 
-## $Batch2
-## [1] 79 91
-## 
-## $Batch3
-## [1] 79 87
-## 
-## $Batch4
-## [1] 79 95
-## 
-## $Batch5
-## [1] 79 90</code></pre>
+<code class="sourceCode R"><span><span class="va">dat_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Batch1"</span> <span class="op">=</span> <span class="va">b1</span>,</span>
+<span>    <span class="st">"Batch2"</span> <span class="op">=</span> <span class="va">b2</span>,</span>
+<span>    <span class="st">"Batch3"</span> <span class="op">=</span> <span class="va">b3</span>,</span>
+<span>    <span class="st">"Batch4"</span> <span class="op">=</span> <span class="va">b4</span>,</span>
+<span>    <span class="st">"Batch5"</span> <span class="op">=</span> <span class="va">b5</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># checking the dimensions of the data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="va">dim</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $Batch1</span></span>
+<span><span class="co">## [1] 79 89</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch2</span></span>
+<span><span class="co">## [1] 79 91</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch3</span></span>
+<span><span class="co">## [1] 79 87</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch4</span></span>
+<span><span class="co">## [1] 79 95</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch5</span></span>
+<span><span class="co">## [1] 79 90</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Log transform raw assay</span>
-<span class="va">dat_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"logRaw"</span>, withDimnames <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"raw"</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
-    <span class="va">dat</span>
-<span class="op">}</span><span class="op">)</span>
-
-<span class="co"># Setting the order of batches</span>
-<span class="va">h_order</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Batch"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
-<span class="va">h_order</span> <span class="op">=</span> <span class="va">h_order</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">h_order</span><span class="op">)</span><span class="op">]</span>
-
-<span class="co"># checking the dimensions of the data before cleaning</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="va">dim</span><span class="op">)</span></code></pre></div>
-<pre><code>## $Batch1
-## [1] 79 89
-## 
-## $Batch2
-## [1] 79 91
-## 
-## $Batch3
-## [1] 79 87
-## 
-## $Batch4
-## [1] 79 95
-## 
-## $Batch5
-## [1] 79 90</code></pre>
+<code class="sourceCode R"><span><span class="co"># Log transform raw assay</span></span>
+<span><span class="va">dat_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"logRaw"</span>, withDimnames <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"raw"</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="va">dat</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Setting the order of batches</span></span>
+<span><span class="va">h_order</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Batch"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">h_order</span> <span class="op">=</span> <span class="va">h_order</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">h_order</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># checking the dimensions of the data before cleaning</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="va">dim</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $Batch1</span></span>
+<span><span class="co">## [1] 79 89</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch2</span></span>
+<span><span class="co">## [1] 79 91</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch3</span></span>
+<span><span class="co">## [1] 79 87</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch4</span></span>
+<span><span class="co">## [1] 79 95</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch5</span></span>
+<span><span class="co">## [1] 79 90</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat_list</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/clean.html">clean</a></span><span class="op">(</span><span class="va">dat_list</span>, threshold <span class="op">=</span> <span class="fl">0.5</span>, 
-  method <span class="op">=</span> <span class="st">"intersect"</span>, assay <span class="op">=</span> <span class="st">"logRaw"</span>, newAssay <span class="op">=</span> <span class="st">"rawImpute"</span><span class="op">)</span>
-
-<span class="co"># checking the dimensions of the data after cleaning</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="va">dim</span><span class="op">)</span></code></pre></div>
-<pre><code>## $Batch1
-## [1] 61 89
-## 
-## $Batch2
-## [1] 61 91
-## 
-## $Batch3
-## [1] 61 87
-## 
-## $Batch4
-## [1] 61 95
-## 
-## $Batch5
-## [1] 61 90</code></pre>
+<code class="sourceCode R"><span><span class="va">dat_list</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/clean.html">clean</a></span><span class="op">(</span><span class="va">dat_list</span>, threshold <span class="op">=</span> <span class="fl">0.5</span>, </span>
+<span>  method <span class="op">=</span> <span class="st">"intersect"</span>, assay <span class="op">=</span> <span class="st">"logRaw"</span>, newAssay <span class="op">=</span> <span class="st">"rawImpute"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># checking the dimensions of the data after cleaning</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">dat_list</span>, <span class="va">dim</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $Batch1</span></span>
+<span><span class="co">## [1] 61 89</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch2</span></span>
+<span><span class="co">## [1] 61 91</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch3</span></span>
+<span><span class="co">## [1] 61 87</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch4</span></span>
+<span><span class="co">## [1] 61 95</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Batch5</span></span>
+<span><span class="co">## [1] 61 90</span></span></code></pre>
 <p>We have filtered metabolites with more than 50% of missing values per batch and selected metabolites that are quantified across all batches (intersect) with <code>clean</code> function. After filtering process, <code>clean</code> function performs k-nearest neighbour imputation. The new imputed assay is named as <code>rawImpute</code>. After cleaning we now have 61 intersecting metabolites quantified for each batch.</p>
 </div>
-<div id="perfrom-hruv" class="section level1">
-<h1 class="hasAnchor">
-<a href="#perfrom-hruv" class="anchor"></a>Perfrom hRUV</h1>
+<div class="section level2">
+<h2 id="perfrom-hruv">Perfrom hRUV<a class="anchor" aria-label="anchor" href="#perfrom-hruv"></a>
+</h2>
 <p>We can proceed to perform intra- and inter-batch normalisation with hRUV.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat</span> <span class="op">=</span> <span class="fu"><a href="../reference/hruv.html">hruv</a></span><span class="op">(</span>
-    dat_list <span class="op">=</span> <span class="va">dat_list</span>,
-    assay <span class="op">=</span> <span class="st">"rawImpute"</span>,
-    intra <span class="op">=</span> <span class="st">"loessShort"</span>,
-    inter <span class="op">=</span> <span class="st">"concatenate"</span>,
-    intra_k <span class="op">=</span> <span class="fl">5</span>, inter_k <span class="op">=</span> <span class="fl">5</span>,
-    pCtlName <span class="op">=</span> <span class="st">"biological_sample"</span>,
-    negCtl <span class="op">=</span> <span class="cn">NULL</span>,
-    intra_rep <span class="op">=</span> <span class="st">"short_replicate"</span>,
-    inter_rep <span class="op">=</span> <span class="st">"batch_replicate"</span>
-    
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dat</span> <span class="op">=</span> <span class="fu"><a href="../reference/hruv.html">hruv</a></span><span class="op">(</span></span>
+<span>    dat_list <span class="op">=</span> <span class="va">dat_list</span>,</span>
+<span>    assay <span class="op">=</span> <span class="st">"rawImpute"</span>,</span>
+<span>    intra <span class="op">=</span> <span class="st">"loessShort"</span>,</span>
+<span>    inter <span class="op">=</span> <span class="st">"concatenate"</span>,</span>
+<span>    intra_k <span class="op">=</span> <span class="fl">5</span>, inter_k <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    pCtlName <span class="op">=</span> <span class="st">"biological_sample"</span>,</span>
+<span>    negCtl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    intra_rep <span class="op">=</span> <span class="st">"short_replicate"</span>,</span>
+<span>    inter_rep <span class="op">=</span> <span class="st">"batch_replicate"</span></span>
+<span>    </span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Here, we perform hRUV on rawImpute assay. For intra batch normalisation, we perform loess smoothing on samples and RUV-III using short replicates with parameter k set to 5. For inter batch normalisation, we perform concatenating hierarchical structure using batch replicate samples. The RUV-III paramter k is also set to 5 for inter-batch normalisation.</p>
 <p>We can now compare before and after hruv normalisation.</p>
-<div id="pca" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pca" class="anchor"></a>PCA</h2>
+<div class="section level3">
+<h3 id="pca">PCA<a class="anchor" aria-label="anchor" href="#pca"></a>
+</h3>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: 'gridExtra'</code></pre>
-<pre><code>## The following object is masked from 'package:Biobase':
-## 
-##     combine</code></pre>
-<pre><code>## The following object is masked from 'package:BiocGenerics':
-## 
-##     combine</code></pre>
-<pre><code>## The following object is masked from 'package:dplyr':
-## 
-##     combine</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## Attaching package: 'gridExtra'</span></span></code></pre>
+<pre><code><span><span class="co">## The following object is masked from 'package:Biobase':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     combine</span></span></code></pre>
+<pre><code><span><span class="co">## The following object is masked from 'package:BiocGenerics':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     combine</span></span></code></pre>
+<pre><code><span><span class="co">## The following object is masked from 'package:dplyr':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     combine</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p1</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotPCA.html">plotPCA</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"rawImpute"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span>
-<span class="va">p2</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotPCA.html">plotPCA</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"loessShort_concatenate"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p1</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotPCA.html">plotPCA</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"rawImpute"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotPCA.html">plotPCA</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"loessShort_concatenate"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hRUV_files/figure-html/unnamed-chunk-6-1.png" width="960"></p>
 <p>From the above PCA plot, you can see that the assay before normalisation has strong batch effect. The assay after normalisation on the right panel does no longer show batch effect.</p>
 </div>
-<div id="run-plot" class="section level2">
-<h2 class="hasAnchor">
-<a href="#run-plot" class="anchor"></a>Run plot</h2>
+<div class="section level3">
+<h3 id="run-plot">Run plot<a class="anchor" aria-label="anchor" href="#run-plot"></a>
+</h3>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p1</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotRun.html">plotRun</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"rawImpute"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span>
-<span class="va">p2</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotRun.html">plotRun</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"loessShort_concatenate"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span><span class="op">$</span><span class="va">`1-methylhistamine`</span>, <span class="va">p2</span><span class="op">$</span><span class="va">`1-methylhistamine`</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p1</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotRun.html">plotRun</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"rawImpute"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">=</span> <span class="fu">hRUV</span><span class="fu">::</span><span class="fu"><a href="../reference/plotRun.html">plotRun</a></span><span class="op">(</span><span class="va">dat</span>, assay <span class="op">=</span> <span class="st">"loessShort_concatenate"</span>, colour <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">batch_info</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span><span class="op">$</span><span class="va">`1-methylhistamine`</span>, <span class="va">p2</span><span class="op">$</span><span class="va">`1-methylhistamine`</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hRUV_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>The run plot above shows signal drift present in the raw data for metabolite 1-methylhistamine. This is corrected after hRUV normalisation.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span><span class="op">$</span><span class="va">GlucosePos2</span>, <span class="va">p2</span><span class="op">$</span><span class="va">GlucosePos2</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span><span class="op">$</span><span class="va">GlucosePos2</span>, <span class="va">p2</span><span class="op">$</span><span class="va">GlucosePos2</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hRUV_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Further, in metabolite GlucosePos2, the assay before normalisation shows strong batch effects, but they are corrected after hRUV normalisation.</p>
 </div>
 </div>
-<div id="sessioninfo" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sessioninfo" class="anchor"></a>SessionInfo</h1>
+<div class="section level2">
+<h2 id="sessioninfo">SessionInfo<a class="anchor" aria-label="anchor" href="#sessioninfo"></a>
+</h2>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## R version 4.1.0 (2021-05-18)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.7
-## 
-## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
-## [8] methods   base     
-## 
-## other attached packages:
-##  [1] gridExtra_2.3               SummarizedExperiment_1.22.0
-##  [3] Biobase_2.52.0              GenomicRanges_1.44.0       
-##  [5] GenomeInfoDb_1.28.1         IRanges_2.26.0             
-##  [7] S4Vectors_0.30.0            BiocGenerics_0.38.0        
-##  [9] MatrixGenerics_1.4.2        matrixStats_0.60.0         
-## [11] dplyr_1.0.7                 hRUV_0.1.3                 
-## [13] BiocStyle_2.20.2           
-## 
-## loaded via a namespace (and not attached):
-##  [1] tidyr_1.1.3            TTR_0.24.2             highr_0.9             
-##  [4] BiocManager_1.30.16    GenomeInfoDbData_1.2.6 impute_1.66.0         
-##  [7] yaml_2.2.1             pillar_1.6.2           lattice_0.20-44       
-## [10] glue_1.4.2             digest_0.6.27          XVector_0.32.0        
-## [13] colorspace_2.0-2       htmltools_0.5.1.1      Matrix_1.3-3          
-## [16] pkgconfig_2.0.3        bookdown_0.23          zlibbioc_1.38.0       
-## [19] purrr_0.3.4            scales_1.1.1           tzdb_0.1.2            
-## [22] tibble_3.1.3           farver_2.1.0           generics_0.1.0        
-## [25] ggplot2_3.3.5          ellipsis_0.3.2         cachem_1.0.5          
-## [28] quantmod_0.4.18        DMwR2_0.0.2            magrittr_2.0.1        
-## [31] crayon_1.4.1           memoise_2.0.0          evaluate_0.14         
-## [34] fs_1.5.0               fansi_0.5.0            MASS_7.3-54           
-## [37] xts_0.12.1             class_7.3-19           textshaping_0.3.5     
-## [40] tools_4.1.0            hms_1.1.0              lifecycle_1.0.0       
-## [43] stringr_1.4.0          munsell_0.5.0          DelayedArray_0.18.0   
-## [46] compiler_4.1.0         pkgdown_1.6.1          systemfonts_1.0.2     
-## [49] rlang_0.4.11           grid_4.1.0             RCurl_1.98-1.4        
-## [52] labeling_0.4.2         bitops_1.0-7           rmarkdown_2.10        
-## [55] gtable_0.3.0           DBI_1.1.1              curl_4.3.2            
-## [58] R6_2.5.0               zoo_1.8-9              knitr_1.33            
-## [61] fastmap_1.1.0          utf8_1.2.2             rprojroot_2.0.2       
-## [64] ragg_1.1.3             readr_2.0.1            desc_1.3.0            
-## [67] stringi_1.7.3          vctrs_0.3.8            rpart_4.1-15          
-## [70] tidyselect_1.1.1       xfun_0.25</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## R version 4.2.1 (2022-06-23)</span></span>
+<span><span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
+<span><span class="co">## Running under: macOS Big Sur ... 10.16</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Matrix products: default</span></span>
+<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
+<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## locale:</span></span>
+<span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attached base packages:</span></span>
+<span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">## [8] base     </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## other attached packages:</span></span>
+<span><span class="co">##  [1] gridExtra_2.3               SummarizedExperiment_1.26.1</span></span>
+<span><span class="co">##  [3] Biobase_2.56.0              GenomicRanges_1.48.0       </span></span>
+<span><span class="co">##  [5] GenomeInfoDb_1.32.4         IRanges_2.30.1             </span></span>
+<span><span class="co">##  [7] S4Vectors_0.34.0            BiocGenerics_0.42.0        </span></span>
+<span><span class="co">##  [9] MatrixGenerics_1.8.1        matrixStats_0.62.0         </span></span>
+<span><span class="co">## [11] dplyr_1.0.10                hRUV_0.1.3                 </span></span>
+<span><span class="co">## [13] BiocStyle_2.24.0           </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## loaded via a namespace (and not attached):</span></span>
+<span><span class="co">##  [1] tidyr_1.2.1            sass_0.4.2             jsonlite_1.8.0        </span></span>
+<span><span class="co">##  [4] bslib_0.4.0            TTR_0.24.3             highr_0.9             </span></span>
+<span><span class="co">##  [7] BiocManager_1.30.18    GenomeInfoDbData_1.2.8 impute_1.70.0         </span></span>
+<span><span class="co">## [10] yaml_2.3.5             pillar_1.8.1           lattice_0.20-45       </span></span>
+<span><span class="co">## [13] glue_1.6.2             digest_0.6.29          XVector_0.36.0        </span></span>
+<span><span class="co">## [16] colorspace_2.0-3       htmltools_0.5.3        Matrix_1.4-1          </span></span>
+<span><span class="co">## [19] pkgconfig_2.0.3        bookdown_0.29          zlibbioc_1.42.0       </span></span>
+<span><span class="co">## [22] purrr_0.3.4            scales_1.2.1           tzdb_0.3.0            </span></span>
+<span><span class="co">## [25] tibble_3.1.8           farver_2.1.1           generics_0.1.3        </span></span>
+<span><span class="co">## [28] ggplot2_3.3.6          ellipsis_0.3.2         cachem_1.0.6          </span></span>
+<span><span class="co">## [31] cli_3.4.1              quantmod_0.4.20        DMwR2_0.0.2           </span></span>
+<span><span class="co">## [34] magrittr_2.0.3         memoise_2.0.1          evaluate_0.16         </span></span>
+<span><span class="co">## [37] fs_1.5.2               fansi_1.0.3            MASS_7.3-57           </span></span>
+<span><span class="co">## [40] xts_0.12.1             class_7.3-20           textshaping_0.3.6     </span></span>
+<span><span class="co">## [43] tools_4.2.1            hms_1.1.2              lifecycle_1.0.2       </span></span>
+<span><span class="co">## [46] stringr_1.4.1          munsell_0.5.0          DelayedArray_0.22.0   </span></span>
+<span><span class="co">## [49] compiler_4.2.1         pkgdown_2.0.6          jquerylib_0.1.4       </span></span>
+<span><span class="co">## [52] systemfonts_1.0.4      rlang_1.0.6            grid_4.2.1            </span></span>
+<span><span class="co">## [55] RCurl_1.98-1.8         labeling_0.4.2         bitops_1.0-7          </span></span>
+<span><span class="co">## [58] rmarkdown_2.16         gtable_0.3.1           DBI_1.1.3             </span></span>
+<span><span class="co">## [61] curl_4.3.2             R6_2.5.1               zoo_1.8-11            </span></span>
+<span><span class="co">## [64] knitr_1.40             fastmap_1.1.0          utf8_1.2.2            </span></span>
+<span><span class="co">## [67] rprojroot_2.0.3        ragg_1.2.2             readr_2.1.2           </span></span>
+<span><span class="co">## [70] desc_1.4.2             stringi_1.7.8          vctrs_0.4.1           </span></span>
+<span><span class="co">## [73] rpart_4.1.16           tidyselect_1.1.2       xfun_0.33</span></span></code></pre>
 </div>
   </div>
 
@@ -348,11 +345,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Taiyun Kim.</p>
+  <p></p>
+<p>Developed by Taiyun Kim.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -360,6 +359,8 @@
 
   
 
+
+  
 
   </body>
 </html>

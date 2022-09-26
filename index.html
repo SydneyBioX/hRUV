@@ -21,6 +21,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,18 +35,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">hRUV</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/hRUV.html">Get started</a>
 </li>
@@ -69,63 +65,61 @@
   <div class="contents col-md-9">
 
 
-<div id="hruv" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#hruv" class="anchor"></a>hRUV</h1></div>
-<p><code>hRUV</code> is a package for normalisation of multiple batches of metabolomics data in a hierarchical strategy with use of samples replicates in a large-scale studies. The tool utilises 2 types of replicates: intra-batch and inter-batch replicates to estimate the unwatned variation within and between batches with RUV-III. We have designed the replicate embedding arrangements within and between batches from <a href="http://shiny.maths.usyd.edu.au/hRUV" class="uri">http://shiny.maths.usyd.edu.au/hRUV</a>. Our novel tool is a novel hierarchical approach to removing unwanted variation by harnessing information from sample replicates embedded in the seequence of experimental runs/batches and applying signal drift correction with robust linear or non-linear smoothers.</p>
-<div id="hruv-overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hruv-overview" class="anchor"></a>hRUV overview</h2>
+<div class="section level1">
+<div class="page-header"><h1 id="hruv">hRUV<a class="anchor" aria-label="anchor" href="#hruv"></a>
+</h1></div>
+<p><code>hRUV</code> is a package for normalisation of multiple batches of metabolomics data in a hierarchical strategy with use of samples replicates in large-scale studies. The tool utilises 2 types of replicates: intra-batch and inter-batch replicates to estimate the unwatned variation within and between batches with RUV-III. We have designed the replicate embedding arrangements within and between batches from <a href="http://shiny.maths.usyd.edu.au/hRUV" class="external-link uri">http://shiny.maths.usyd.edu.au/hRUV</a>. Our novel tool is a novel hierarchical approach to removing unwanted variation by harnessing information from sample replicates embedded in the seequence of experimental runs/batches and applying signal drift correction with robust linear or non-linear smoothers.</p>
+<div class="section level2">
+<h2 id="hruv-overview">hRUV overview<a class="anchor" aria-label="anchor" href="#hruv-overview"></a>
+</h2>
 <p><img src="https://raw.githubusercontent.com/SydneyBioX/hRUV/main/inst/overview_v1.png" align="center" width="100%"></p>
 </div>
-<div id="software-requirements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#software-requirements" class="anchor"></a>Software requirements</h2>
+<div class="section level2">
+<h2 id="software-requirements">Software requirements<a class="anchor" aria-label="anchor" href="#software-requirements"></a>
+</h2>
 <p>This package has been tested for <em>macOS Big Sur (11.1)</em> and <em>Linux Debian 10 (buster)</em> with R version 4.0.3.</p>
-<div id="r-package-dependecies" class="section level3">
-<h3 class="hasAnchor">
-<a href="#r-package-dependecies" class="anchor"></a>R package dependecies</h3>
+<div class="section level3"><h3 id="r-package-dependecies">R package dependecies<a class="anchor" aria-label="anchor" href="#r-package-dependecies"></a>
+</h3></div>
+<div class="section level3">
+<h3 id="cran">CRAN<a class="anchor" aria-label="anchor" href="#cran"></a>
+</h3>
+<pre><code><span><span class="va">dplyr</span></span>
+<span><span class="va">tidyr</span></span>
+<span><span class="va">rlang</span></span>
+<span><span class="va">ggplot2</span></span>
+<span><span class="va">plotly</span></span>
+<span><span class="va">S4Vectors</span></span>
+<span><span class="va">tibble</span></span>
+<span><span class="va">DMwR2</span></span>
+<span><span class="va">MASS</span></span></code></pre>
 </div>
-<div id="cran" class="section level3">
-<h3 class="hasAnchor">
-<a href="#cran" class="anchor"></a>CRAN</h3>
-<pre><code>dplyr
-tidyr
-rlang
-ggplot2
-plotly
-S4Vectors
-tibble
-DMwR2
-MASS</code></pre>
-</div>
-<div id="bioconductor" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bioconductor" class="anchor"></a>Bioconductor</h3>
-<pre><code>SummarizedExperiment
-impute</code></pre>
+<div class="section level3">
+<h3 id="bioconductor">Bioconductor<a class="anchor" aria-label="anchor" href="#bioconductor"></a>
+</h3>
+<pre><code><span><span class="va">SummarizedExperiment</span></span>
+<span><span class="va">impute</span></span></code></pre>
 </div>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the R package from GitHub using the <code>devtools</code> package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"devtools"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-
-<span class="co"># Tested on devtools version 2.3.2.</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">devtools</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SydneyBioX/hRUV"</span>, build_vignettes<span class="op">=</span><span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"devtools"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Tested on devtools version 2.3.2.</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SydneyBioX/hRUV"</span>, build_vignettes<span class="op">=</span><span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="vignette" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vignette" class="anchor"></a>Vignette</h2>
-<p>The vignette is available at <a href="https://sydneybiox.github.io/hRUV/" class="uri">https://sydneybiox.github.io/hRUV/</a>. Alternatively, it can be accessed with <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("hRUV")</a></code> in your R console.</p>
+<div class="section level2">
+<h2 id="vignette">Vignette<a class="anchor" aria-label="anchor" href="#vignette"></a>
+</h2>
+<p>The vignette is available at <a href="https://sydneybiox.github.io/hRUV/" class="external-link uri">https://sydneybiox.github.io/hRUV/</a>. Alternatively, it can be accessed with <code>browseVignettes("hRUV")</code> in your R console.</p>
 </div>
-<div id="contact-us" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contact-us" class="anchor"></a>Contact us</h2>
+<div class="section level2">
+<h2 id="contact-us">Contact us<a class="anchor" aria-label="anchor" href="#contact-us"></a>
+</h2>
 <p>If you have any enquiries, especially about performing hRUV to integrate your metabolomics data, please contact <a href="mailto:taiyun.kim@sydney.edu.au" class="email">taiyun.kim@sydney.edu.au</a>. We are also happy to receive any suggestions and comments.</p>
 </div>
 </div>
@@ -134,35 +128,47 @@ impute</code></pre>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing hRUV</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Taiyun Kim <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://zenodo.org/badge/latestdoi/321847071"><img src="https://zenodo.org/badge/321847071.svg" alt="DOI"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/321847071" class="external-link"><img src="https://zenodo.org/badge/321847071.svg" alt="DOI"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Taiyun Kim.</p>
+  <p></p>
+<p>Developed by Taiyun Kim.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -170,6 +176,8 @@ impute</code></pre>
 
   
 
+
+  
 
   </body>
 </html>
