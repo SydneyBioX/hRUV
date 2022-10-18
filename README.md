@@ -57,3 +57,7 @@ The vignette is available at https://sydneybiox.github.io/hRUV/. Alternatively, 
 ## Contact us
 
 If you have any enquiries, especially about performing hRUV to integrate your metabolomics data, please contact taiyun.kim@sydney.edu.au. We are also happy to receive any suggestions and comments.
+
+## Citation
+
+Kim, T., Tang, O., Vernon, S. T., Kott, K. A., Koay, Y. C., Park, J., James, D. E., Grieve, S. M., Speed, T. P., Yang, P., Figtree, G. A., O’Sullivan, J. F., & Yang, J. Y. H. (2021). A hierarchical approach to removal of unwanted variation for large-scale metabolomics data. In Nature Communications (Vol. 12, Issue 1). Springer Science and Business Media LLC. https://doi.org/10.1038/s41467-021-25210-5 
